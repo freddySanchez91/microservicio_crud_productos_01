@@ -15,7 +15,7 @@
 	"name":"altaProducto",
 	"paramGroup":{
 		"binaryFilePath":"",
-		"bodyKeyValueListJson":"{\n  \"codProducto\": \"vdfvfvfdvdfvfdv\",\n  \"nombre\": \"nombre_hojyl\",\n  \"catgoria\": \"catgoria_i1cro\",\n  \"precio\": 1.0,\n  \"stock\": 1\n}",
+		"bodyKeyValueListJson":"{\n  \"codigo\": \"MX200\",\n  \"nombre\": \"two\",\n  \"categoria\": \"1\",\n  \"precio\": 1.0,\n  \"stock\": 1\n}",
 		"bodyParamMap":{
 			"producto":{
 				"customFlag":2,
@@ -23,13 +23,13 @@
 				"key":"producto",
 				"type":"Object",
 				"value":{
-					"codProducto":{
+					"codigo":{
 						"comment":"",
 						"customFlag":2,
 						"enabled":true,
-						"key":"codProducto",
+						"key":"codigo",
 						"type":"String",
-						"value":"codProducto_tiu0e"
+						"value":"codigo_u4301"
 					},
 					"nombre":{
 						"comment":"",
@@ -37,15 +37,15 @@
 						"enabled":true,
 						"key":"nombre",
 						"type":"String",
-						"value":"nombre_ghakx"
+						"value":"nombre_4lwft"
 					},
-					"catgoria":{
+					"categoria":{
 						"comment":"",
 						"customFlag":2,
 						"enabled":true,
-						"key":"catgoria",
+						"key":"categoria",
 						"type":"String",
-						"value":"catgoria_mgq8c"
+						"value":"categoria_vhdhz"
 					},
 					"precio":{
 						"comment":"",
@@ -74,7 +74,7 @@
 		"methodDescription":"altaProducto",
 		"methodType":"POST",
 		"multipartKeyValueListJson":"[]",
-		"originUrl":"/alta_producto",
+		"originUrl":"/reactive/alta_producto",
 		"pathParamsKeyValueListJson":"[]",
 		"postScript":"",
 		"postType":"json",
@@ -82,7 +82,7 @@
 		"returnDocument":"null",
 		"returnTypeParamMap":{},
 		"tempId":"",
-		"url":"/alta_producto",
+		"url":"/reactive/alta_producto",
 		"urlEncodedKeyValueListJson":"[]",
 		"urlEncodedKeyValueListText":"",
 		"urlParamsKeyValueListJson":"[]",

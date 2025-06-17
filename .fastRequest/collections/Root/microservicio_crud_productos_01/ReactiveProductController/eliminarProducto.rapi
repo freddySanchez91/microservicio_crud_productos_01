@@ -19,19 +19,13 @@
 		"bodyParamMap":{},
 		"classDescription":"",
 		"className":"com.lasa.microservicio_crud_productos_01.reactivecontroller.ReactiveProductController",
-		"headerParamsKeyValueList":[
-			{
-				"enabled":true,
-				"type":"Accept",
-				"value":"text/event-stream"
-			}
-		],
+		"headerParamsKeyValueList":[],
 		"jsonDocument":"",
 		"method":"eliminarProducto",
 		"methodDescription":"eliminarProducto",
 		"methodType":"DELETE",
 		"multipartKeyValueListJson":"[]",
-		"originUrl":"/delete_producto",
+		"originUrl":"/reactive/delete_producto",
 		"pathParamsKeyValueListJson":"[]",
 		"postScript":"",
 		"postType":"json",
@@ -39,7 +33,7 @@
 		"returnDocument":"null",
 		"returnTypeParamMap":{},
 		"tempId":"",
-		"url":"/delete_producto",
+		"url":"/reactive/delete_producto",
 		"urlEncodedKeyValueListJson":"[{\"comment\":\"\",\"customFlag\":2,\"enabled\":true,\"key\":\"codigo\",\"type\":\"String\",\"value\":\"MX-1001\"}]",
 		"urlEncodedKeyValueListText":"codigo=MX-1001",
 		"urlParamsKeyValueListJson":"[]",

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,45 +26,47 @@ public class ReactiveProductService implements IReactiveProductService{
 
     @Override
     public Flux<Producto> catalogo() {
-        return Flux.fromIterable(productos).delayElements(Duration.ofSeconds(1));
+        return Flux.fromIterable(productos);
     }
 
     @Override
     public Flux<Producto> productosCategoria(String categoria) {
-        return Flux.fromIterable(productos).filter(p-> p.getCatgoria().equals(categoria)).delayElements(Duration.ofSeconds(1));
+        return Flux.fromIterable(productos).filter(p -> p.getCategoria().equals(categoria));
     }
 
     @Override
     public Mono<Producto> productoCodigo(String codigo) {
-        //Si el mono es empty -> aplicaos un switchIfEmpty para devovler un producto por default
-        return catalogo().filter(p->p.getCodProducto().equals(codigo)).next();
+        return catalogo().filter(p -> p.getCodigo().equals(codigo)).next();
     }
 
     @Override
-    public Mono<Void> altaProducto(Producto producto) {
-
-        return productoCodigo(producto.getCodProducto())  // -> Mono<Producto>
-                .switchIfEmpty(Mono.just(producto).map(p->{
+    public Mono<Producto> altaProducto(Producto producto) {
+        boolean existe = productos.stream()
+                .anyMatch(p -> p.getCodigo().equals(producto.getCodigo()));
+        if (existe) {
+            return Mono.empty(); // Ya existe, no agregamos
+        } else {
             productos.add(producto);
-            return p;  //Mono<Producto>
-        })).then();  //Mono<Void> el then lo unico que hace es hacer el Void
+            return Mono.just(producto);
+        }
     }
 
     @Override
     public Mono<Producto> eliminarProducto(String codigo) {
         return productoCodigo(codigo)
-                .map(p -> {
-                      productos.removeIf(prod -> prod.getCodProducto().equals(codigo));
-                            return p;
+                .flatMap(p -> {
+                    productos.removeIf(prod -> prod.getCodigo().equals(codigo));
+                    return Mono.just(p);
                 });
     }
 
     @Override
     public Mono<Producto> actualizarPrecio(String codigo, double precio) {
-        return productoCodigo(codigo).map(p->{
+        return productoCodigo(codigo).flatMap(p -> {
             p.setPrecio(precio);
-            productos.removeIf(prod-> prod.getCodProducto().equals(codigo));
-            return p;
+            productos.removeIf(prod -> prod.getCodigo().equals(codigo));
+            productos.add(p);
+            return Mono.just(p);
         });
     }
 }

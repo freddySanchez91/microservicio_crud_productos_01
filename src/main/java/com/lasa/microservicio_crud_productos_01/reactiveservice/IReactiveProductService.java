@@ -9,7 +9,7 @@ public interface IReactiveProductService {
     Flux<Producto> catalogo();
     Flux<Producto> productosCategoria(String categoria);
     Mono<Producto> productoCodigo(String codigo);
-    Mono<Void> altaProducto(Producto producto);
+    Mono<Producto> altaProducto(Producto producto);
     Mono<Producto> eliminarProducto(String codigo);
     Mono<Producto> actualizarPrecio(String codigo, double precio);
 }

@@ -29,17 +29,17 @@ public class ProductoService implements IProductService{
 
     @Override
     public List<Producto> productosCategoria(String categoria) {
-        return productos.stream().filter(producto -> producto.getCatgoria().equals(categoria)).toList();
+        return productos.stream().filter(producto -> producto.getCategoria().equals(categoria)).toList();
     }
 
     @Override
     public Producto productoCodigo(String codigo) {
-        return productos.stream().filter(producto -> producto.getCodProducto().equals(codigo)).findFirst().orElse(null);
+        return productos.stream().filter(producto -> producto.getCodigo().equals(codigo)).findFirst().orElse(null);
     }
 
     @Override
     public void altaProducto(Producto producto) {
-        if(productoCodigo(producto.getCodProducto()) == null){
+        if(productoCodigo(producto.getCodigo()) == null){
             productos.add(producto);
         }
     }
@@ -48,7 +48,7 @@ public class ProductoService implements IProductService{
     public Producto eliminarProducto(String codigo) {
         Producto producto =  productoCodigo(codigo);
         if(producto != null){
-            productos.removeIf(p -> p.getCodProducto().equals(codigo));
+            productos.removeIf(p -> p.getCodigo().equals(codigo));
         }
         return producto;
     }
@@ -58,7 +58,7 @@ public class ProductoService implements IProductService{
         Producto producto =  productoCodigo(codigo);
         if(producto != null){
             producto.setPrecio(precio);
-            productos.removeIf(p->p.getCodProducto().equals(codigo));
+            productos.removeIf(p->p.getCodigo().equals(codigo));
             productos.add(producto);
         }
         return producto;

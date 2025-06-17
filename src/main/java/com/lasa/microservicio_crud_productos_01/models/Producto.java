@@ -9,9 +9,9 @@ import lombok.*;
 @ToString
 public class Producto {
 
-    private String codProducto;
+    private String codigo;
     private String nombre;
-    private String catgoria;
+    private String categoria;
     private double precio;
     private int stock;
 }
