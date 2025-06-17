@@ -21,20 +21,20 @@ public class ReactiveProductController {
 
     // ✅ Este sí es un stream continuo, se ajusta para SSE
     @GetMapping(value = "productos", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Producto> productos() {
-        return reactiveProductService.catalogo();
+    public ResponseEntity<Flux<Producto>> productos() {
+        return new ResponseEntity<>(reactiveProductService.catalogo(), HttpStatus.OK);
     }
 
     // ✅ También aplica para SSE
     @GetMapping(value = "productos_categoria/{categoria}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Producto> productosCategoria(@PathVariable("categoria") String categoria) {
-        return reactiveProductService.productosCategoria(categoria);
+    public ResponseEntity<Flux<Producto>> productosCategoria(@PathVariable("categoria") String categoria) {
+        return new ResponseEntity<>(reactiveProductService.productosCategoria(categoria), HttpStatus.OK);
     }
 
     // ❌ Mono: se queda en JSON (no necesita produces)
     @GetMapping(value = "producto_codigo")
-    public Mono<Producto> productosCodigo(@RequestParam("codigo") String codigo) {
-        return reactiveProductService.productoCodigo(codigo);
+    public ResponseEntity<Mono<Producto>> productosCodigo(@RequestParam("codigo") String codigo) {
+        return new ResponseEntity<>( reactiveProductService.productoCodigo(codigo), HttpStatus.OK);
     }
 
     // ✅ POST en modo stream (lo dejaste bien)
@@ -45,16 +45,17 @@ public class ReactiveProductController {
                 .defaultIfEmpty(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
-
     // ❌ Mono: JSON
     @PutMapping(value = "actualizar_producto")
-    public Mono<Producto> actualizarProducto(@RequestParam("codigo") String codigo, @RequestParam("precio") double precio) {
-        return reactiveProductService.actualizarPrecio(codigo, precio);
+    public Mono<ResponseEntity<Producto>> actualizarProducto(@RequestParam("codigo") String codigo, @RequestParam("precio") double precio) {
+        return reactiveProductService.actualizarPrecio(codigo, precio).map(p-> new ResponseEntity<>(p, HttpStatus.OK)).
+                defaultIfEmpty(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
     // ❌ Mono: JSON
     @DeleteMapping(value = "delete_producto")
-    public Mono<Producto> eliminarProducto(@RequestParam("codigo") String codigo) {
-        return reactiveProductService.eliminarProducto(codigo);
+    public Mono<ResponseEntity<Producto>> eliminarProducto(@RequestParam("codigo") String codigo) {
+        return reactiveProductService.eliminarProducto(codigo).map(p-> new ResponseEntity<>(p, HttpStatus.OK))
+                .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));
     }
 }
